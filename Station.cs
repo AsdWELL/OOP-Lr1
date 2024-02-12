@@ -154,5 +154,4 @@ namespace Lr1
             if (Address != null) sb.Append($"Адрес: {Address}\n");
             return sb.ToString();
         }
-    }
 }
