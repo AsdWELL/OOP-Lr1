@@ -11,6 +11,17 @@ namespace Lr1
 {
     public class Station
     {
+        public enum Fields
+        {
+            Title,
+            NumberOfSeats,
+            SoldTickets,
+            Number,
+            AverageAttendace,
+            YearOfOpening,
+            Address
+        }
+        
         public class NegativeValueException : Exception
         {
             public NegativeValueException(string msg) : base($"{msg} не может быть отрицательнным числом") { }
@@ -27,6 +38,7 @@ namespace Lr1
         }
 
         public string Title { get; set; }
+
         private int _numberOfSeats;
         public int NumberOfSeats
         {
@@ -38,6 +50,7 @@ namespace Lr1
                 _numberOfSeats = value;
             }
         }
+
         private int _soldTickets;
         public int SoldTickets
         {
@@ -49,6 +62,7 @@ namespace Lr1
                 _soldTickets = value;
             }
         }
+
         private string _number;
         public string Number
         {
@@ -60,6 +74,7 @@ namespace Lr1
                 _number = value;
             }
         }
+
         private double _averageAttendace;
         public double AverageAttendace
         {
@@ -71,21 +86,28 @@ namespace Lr1
                 _averageAttendace = value;
             }
         }
-        private double _yearOfOpening;
-        public double YearOfOpening
+
+        private DateTime _dateOfOpening;
+        public DateTime DateOfOpening
         {
-            get => _yearOfOpening;
+            get => _dateOfOpening;
             set
             {
                 int currentYear = DateTime.Now.Year;
-                if (value < 1931 || value > currentYear)
+                if (value.Year < 1931 || value.Year > currentYear)
                     throw new InvalidYearOfOpeningException(currentYear);
-                _yearOfOpening = value;
+                _dateOfOpening = value;
             }
         }
+
         public string Address { get; set; }
+
         public static int TotalStations { get; private set; }
-        public Station() => TotalStations++;
+
+        public Station()
+        {
+            TotalStations++;
+        }
 
         public Station(string title, int numberOfSeats) : this()
         {
@@ -94,18 +116,43 @@ namespace Lr1
         }
 
         public Station(string title, int numberOfSeats, int soldTickets,
-            string number, double averageAttendace, double yearOfOpening, string address) : this()
+            string number, double averageAttendace, DateTime yearOfOpening, string address) : this()
         {
+            Title = title;
             NumberOfSeats = numberOfSeats;
-            _soldTickets = soldTickets;
             SoldTickets = soldTickets;
-            _number = number;
             Number = number;
-            _averageAttendace = averageAttendace;
             AverageAttendace = averageAttendace;
-            _yearOfOpening = yearOfOpening;
-            YearOfOpening = yearOfOpening;
+            DateOfOpening = yearOfOpening;
             Address = address;
+        }
+
+        public string NumberOfSeatsToHex() =>  Convert.ToString(NumberOfSeats, 16);
+
+        public string GetFieldValue(Fields fieldName) =>
+            fieldName switch
+            {
+                Fields.Title => Title,
+                Fields.NumberOfSeats => NumberOfSeats.ToString(),
+                Fields.Number => Number,
+                Fields.SoldTickets => SoldTickets.ToString(),
+                Fields.AverageAttendace => AverageAttendace.ToString(),
+                Fields.YearOfOpening => DateOfOpening.ToString(),
+                Fields.Address => Address,
+                _ => "",
+            };
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (Title != null) sb.Append($"Название вокзала: {Title}\n");
+            if (NumberOfSeats != 0) sb.Append($"Количество мест: {NumberOfSeats}\n");
+            if (SoldTickets != 0) sb.Append($"Продано билетов: {SoldTickets}\n");
+            if (Number != null) sb.Append($"Номер: {Number}\n");
+            if (AverageAttendace != 0) sb.Append($"Средняя посещаемость: {AverageAttendace}\n");
+            if (DateOfOpening.Year == 1) sb.Append($"Год открытия: {DateOfOpening}\n");
+            if (Address != null) sb.Append($"Адрес: {Address}\n");
+            return sb.ToString();
         }
     }
 }
