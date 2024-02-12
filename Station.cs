@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Design;
 using System.Linq;
@@ -18,10 +19,10 @@ namespace Lr1
             SoldTickets,
             Number,
             AverageAttendace,
-            YearOfOpening,
+            DateOfOpening,
             Address
         }
-        
+
         public class NegativeValueException : Exception
         {
             public NegativeValueException(string msg) : base($"{msg} не может быть отрицательнным числом") { }
@@ -39,8 +40,8 @@ namespace Lr1
 
         public string Title { get; set; }
 
-        private int _numberOfSeats;
-        public int NumberOfSeats
+        private int? _numberOfSeats;
+        public int? NumberOfSeats
         {
             get => _numberOfSeats;
             set
@@ -51,8 +52,8 @@ namespace Lr1
             }
         }
 
-        private int _soldTickets;
-        public int SoldTickets
+        private int? _soldTickets;
+        public int? SoldTickets
         {
             get => _soldTickets;
             set
@@ -69,14 +70,14 @@ namespace Lr1
             get => _number;
             set
             {
-                if (!Regex.IsMatch(value, @"^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"))
+                if (!Regex.IsMatch(value, @"^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{10}$"))
                     throw new WrongNumberFormatException();
                 _number = value;
             }
         }
 
-        private double _averageAttendace;
-        public double AverageAttendace
+        private double? _averageAttendace;
+        public double? AverageAttendace
         {
             get => _averageAttendace;
             set
@@ -107,6 +108,12 @@ namespace Lr1
         public Station()
         {
             TotalStations++;
+            DateOfOpening = DateTime.Now;
+        }
+
+        public Station(string title) : this()
+        {
+            Title = title;
         }
 
         public Station(string title, int numberOfSeats) : this()
@@ -127,7 +134,7 @@ namespace Lr1
             Address = address;
         }
 
-        public string NumberOfSeatsToHex() =>  Convert.ToString(NumberOfSeats, 16);
+        public string NumberOfSeatsToHex() => Convert.ToString((int)NumberOfSeats, 16);
 
         public string GetFieldValue(Fields fieldName) =>
             fieldName switch
@@ -137,7 +144,7 @@ namespace Lr1
                 Fields.Number => Number,
                 Fields.SoldTickets => SoldTickets.ToString(),
                 Fields.AverageAttendace => AverageAttendace.ToString(),
-                Fields.YearOfOpening => DateOfOpening.ToString(),
+                Fields.DateOfOpening => DateOfOpening.ToString(),
                 Fields.Address => Address,
                 _ => "",
             };
@@ -146,12 +153,13 @@ namespace Lr1
         {
             StringBuilder sb = new StringBuilder();
             if (Title != null) sb.Append($"Название вокзала: {Title}\n");
-            if (NumberOfSeats != 0) sb.Append($"Количество мест: {NumberOfSeats}\n");
-            if (SoldTickets != 0) sb.Append($"Продано билетов: {SoldTickets}\n");
+            if (NumberOfSeats != null) sb.Append($"Количество мест: {NumberOfSeats}\n");
+            if (SoldTickets != null) sb.Append($"Продано билетов: {SoldTickets}\n");
             if (Number != null) sb.Append($"Номер: {Number}\n");
-            if (AverageAttendace != 0) sb.Append($"Средняя посещаемость: {AverageAttendace}\n");
-            if (DateOfOpening.Year == 1) sb.Append($"Год открытия: {DateOfOpening}\n");
+            if (AverageAttendace != null) sb.Append($"Средняя посещаемость: {AverageAttendace}\n");
+            if (DateOfOpening.Year != 1) sb.Append($"Дата открытия: {DateOfOpening.ToString("d")}\n");
             if (Address != null) sb.Append($"Адрес: {Address}\n");
             return sb.ToString();
         }
+    }
 }
