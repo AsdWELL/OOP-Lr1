@@ -34,9 +34,13 @@ namespace Lr1
                 if (i.Text.Length == 0)
                 {
                     UpdateStationBtn.Enabled = false;
+                    AddNewStationBtn.Enabled = false;
+                    Stations.Enabled = false;
                     return;
                 }
             UpdateStationBtn.Enabled = true;
+            AddNewStationBtn.Enabled = true;
+            Stations.Enabled = true;
         }
 
         private void SetInfo()
@@ -68,12 +72,14 @@ namespace Lr1
             station.Title = Title.Text;
             station.NumberOfSeats = Convert.ToInt32(NumberOfSeats.Text);
             station.SoldTickets = Convert.ToInt32(SoldTickets.Text);
-            station.AverageAttendace = Convert.ToDouble(AverageAttendace.Text);
+            station.AverageAttendace = Convert.ToDouble(AverageAttendace.Text.Replace('.', ','));
             station.Number = Number.Text;
             station.DateOfOpening = DateOfOpening.Value;
             station.Address = Address.Text;
             _stations[Stations.SelectedIndex] = station;
             SetInfo();
+            if (FieldsLabels.SelectedIndex >= 0)
+                FieldsLabels_SelectedIndexChanged(FieldsLabels, e);
         }
 
         private void AddNewStationBtn_Click(object sender, EventArgs e)
@@ -81,6 +87,11 @@ namespace Lr1
             Station station = new Station("Новый вокзал");
             _stations.Add(station);
             Stations.SelectedIndex = _stations.Count - 1;
+        }
+
+        private void FieldsLabels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FieldValue.Text = _stations[Stations.SelectedIndex].GetFieldValue((Station.Fields)FieldsLabels.SelectedIndex);
         }
     }
 }

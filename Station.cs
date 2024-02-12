@@ -134,17 +134,22 @@ namespace Lr1
             Address = address;
         }
 
-        public string NumberOfSeatsToHex() => Convert.ToString((int)NumberOfSeats, 16);
+        public string NumberOfSeatsToHex()
+        {
+            if (NumberOfSeats == null)
+                return "";
+            return Convert.ToString((int)NumberOfSeats, 16);
+        }
 
-        public string GetFieldValue(Fields fieldName) =>
+        public string? GetFieldValue(Fields fieldName) =>
             fieldName switch
             {
                 Fields.Title => Title,
-                Fields.NumberOfSeats => NumberOfSeats.ToString(),
+                Fields.NumberOfSeats => NumberOfSeatsToHex(),
                 Fields.Number => Number,
                 Fields.SoldTickets => SoldTickets.ToString(),
                 Fields.AverageAttendace => AverageAttendace.ToString(),
-                Fields.DateOfOpening => DateOfOpening.ToString(),
+                Fields.DateOfOpening => DateOfOpening.ToString("d"),
                 Fields.Address => Address,
                 _ => "",
             };
