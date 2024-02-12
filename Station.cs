@@ -107,5 +107,7 @@ namespace Lr1
             YearOfOpening = yearOfOpening;
             Address = address;
         }
+
+       
     }
 }
