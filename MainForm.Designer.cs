@@ -1,6 +1,6 @@
 ﻿namespace Lr1
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -122,17 +122,19 @@
             // 
             // AverageAttendace
             // 
+            AverageAttendace.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             AverageAttendace.Font = new Font("Microsoft Sans Serif", 12F);
             AverageAttendace.Location = new Point(270, 208);
             AverageAttendace.Margin = new Padding(3, 4, 3, 4);
             AverageAttendace.MaxLength = 9;
             AverageAttendace.Name = "AverageAttendace";
             AverageAttendace.Size = new Size(200, 30);
-            AverageAttendace.TabIndex = 8;
+            AverageAttendace.TabIndex = 13;
             AverageAttendace.TextChanged += CheckField;
             // 
             // Title
             // 
+            Title.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Title.Font = new Font("Microsoft Sans Serif", 12F);
             Title.Location = new Point(270, 39);
             Title.Margin = new Padding(3, 4, 3, 4);
@@ -144,6 +146,7 @@
             // 
             // NumberOfSeats
             // 
+            NumberOfSeats.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             NumberOfSeats.Font = new Font("Microsoft Sans Serif", 12F);
             NumberOfSeats.Location = new Point(270, 83);
             NumberOfSeats.Margin = new Padding(3, 4, 3, 4);
@@ -155,6 +158,7 @@
             // 
             // SoldTickets
             // 
+            SoldTickets.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             SoldTickets.Font = new Font("Microsoft Sans Serif", 12F);
             SoldTickets.Location = new Point(270, 124);
             SoldTickets.Margin = new Padding(3, 4, 3, 4);
@@ -166,6 +170,7 @@
             // 
             // Number
             // 
+            Number.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Number.Font = new Font("Microsoft Sans Serif", 12F);
             Number.Location = new Point(270, 168);
             Number.Margin = new Padding(3, 4, 3, 4);
@@ -177,28 +182,31 @@
             // 
             // Address
             // 
+            Address.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Address.Font = new Font("Microsoft Sans Serif", 12F);
             Address.Location = new Point(270, 308);
             Address.Margin = new Padding(3, 4, 3, 4);
             Address.MaxLength = 25;
             Address.Name = "Address";
             Address.Size = new Size(200, 30);
-            Address.TabIndex = 14;
+            Address.TabIndex = 15;
             Address.TextChanged += CheckField;
             // 
             // DateOfOpening
             // 
+            DateOfOpening.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             DateOfOpening.Font = new Font("Microsoft Sans Serif", 12F);
             DateOfOpening.ImeMode = ImeMode.NoControl;
             DateOfOpening.Location = new Point(270, 257);
             DateOfOpening.Margin = new Padding(3, 4, 3, 4);
             DateOfOpening.Name = "DateOfOpening";
             DateOfOpening.Size = new Size(200, 30);
-            DateOfOpening.TabIndex = 15;
+            DateOfOpening.TabIndex = 14;
             DateOfOpening.Value = new DateTime(2024, 2, 12, 0, 0, 0, 0);
             // 
             // Info
             // 
+            Info.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             Info.AutoSize = true;
             Info.Font = new Font("Segoe UI", 12F);
             Info.Location = new Point(14, 432);
@@ -208,6 +216,7 @@
             // 
             // UpdateStationBtn
             // 
+            UpdateStationBtn.Anchor = AnchorStyles.Left;
             UpdateStationBtn.Font = new Font("Segoe UI", 12F);
             UpdateStationBtn.Location = new Point(14, 365);
             UpdateStationBtn.Name = "UpdateStationBtn";
@@ -219,6 +228,7 @@
             // 
             // Stations
             // 
+            Stations.Anchor = AnchorStyles.Right;
             Stations.DropDownStyle = ComboBoxStyle.DropDownList;
             Stations.Font = new Font("Segoe UI", 12F);
             Stations.FormattingEnabled = true;
@@ -230,6 +240,7 @@
             // 
             // AddNewStationBtn
             // 
+            AddNewStationBtn.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             AddNewStationBtn.Font = new Font("Segoe UI", 12F);
             AddNewStationBtn.Location = new Point(270, 365);
             AddNewStationBtn.Name = "AddNewStationBtn";
@@ -241,6 +252,7 @@
             // 
             // FieldsLabels
             // 
+            FieldsLabels.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             FieldsLabels.DropDownStyle = ComboBoxStyle.DropDownList;
             FieldsLabels.Font = new Font("Segoe UI", 12F);
             FieldsLabels.FormattingEnabled = true;
@@ -253,6 +265,7 @@
             // 
             // FieldValue
             // 
+            FieldValue.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             FieldValue.AutoSize = true;
             FieldValue.Font = new Font("Segoe UI", 12F);
             FieldValue.Location = new Point(312, 783);
@@ -260,7 +273,7 @@
             FieldValue.Size = new Size(0, 28);
             FieldValue.TabIndex = 24;
             // 
-            // Form1
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -286,10 +299,9 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Margin = new Padding(3, 4, 3, 4);
-            Name = "Form1";
+            Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Вокзал";
-            Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
         }

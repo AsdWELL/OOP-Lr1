@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Lr1
 {
+    /// <summary>
+    /// Представляет вокзал
+    /// </summary>
     public class Station
     {
         public enum Fields
@@ -18,28 +21,19 @@ namespace Lr1
             NumberOfSeats,
             SoldTickets,
             Number,
-            AverageAttendace,
+            AverageAttendace,   
             DateOfOpening,
             Address
         }
 
-        public class NegativeValueException : Exception
-        {
-            public NegativeValueException(string msg) : base($"{msg} не может быть отрицательнным числом") { }
-        }
-
-        public class WrongNumberFormatException : Exception
-        {
-            public WrongNumberFormatException() : base("Неверный формат номера") { }
-        }
-
-        public class InvalidDateOfOpeningException : Exception
-        {
-            public InvalidDateOfOpeningException() : base("Некорректная дата") { }
-        }
-
+        /// <summary>
+        /// Название вокзала
+        /// </summary>
         public string Title { get; set; }
 
+        /// <summary>
+        /// Количество мест
+        /// </summary>
         private int? _numberOfSeats;
         public int? NumberOfSeats
         {
@@ -52,6 +46,9 @@ namespace Lr1
             }
         }
 
+        /// <summary>
+        /// Количество проданных билетов
+        /// </summary>
         private int? _soldTickets;
         public int? SoldTickets
         {
@@ -64,6 +61,9 @@ namespace Lr1
             }
         }
 
+        /// <summary>
+        /// Номер вокзала
+        /// </summary>
         private string _number;
         public string Number
         {
@@ -76,6 +76,9 @@ namespace Lr1
             }
         }
 
+        /// <summary>
+        /// Средняя посещаемость
+        /// </summary>
         private double? _averageAttendace;
         public double? AverageAttendace
         {
@@ -88,6 +91,9 @@ namespace Lr1
             }
         }
 
+        /// <summary>
+        /// Дата открытия
+        /// </summary>
         private DateTime _dateOfOpening;
         public DateTime DateOfOpening
         {
@@ -101,46 +107,80 @@ namespace Lr1
             }
         }
 
+        /// <summary>
+        /// Адрес вокзала
+        /// </summary>
         public string Address { get; set; }
 
+        /// <summary>
+        /// Количество созданных вокзалов
+        /// </summary>
         public static int TotalStations { get; private set; }
 
+        /// <summary>
+        /// Конструктор бзе параметров
+        /// </summary>
         public Station()
         {
             TotalStations++;
             DateOfOpening = DateTime.Now;
         }
 
+        /// <summary>
+        /// Конструктор, принимающий название возкала
+        /// </summary>
+        /// <param name="title">Название вокзала</param>
         public Station(string title) : this()
         {
             Title = title;
         }
 
-        public Station(string title, int numberOfSeats) : this()
+        /// <summary>
+        /// Конструктор принимающий название вокзала и количестов мест
+        /// </summary>
+        /// <param name="title">Название вокзала</param>
+        /// <param name="numberOfSeats">Количество мест</param>
+        public Station(string title, int numberOfSeats) : this(title)
         {
-            Title = title;
             NumberOfSeats = numberOfSeats;
         }
 
+        /// <summary>
+        /// Конструктор со всемии параметрами
+        /// </summary>
+        /// <param name="title">Название вокзала</param>
+        /// <param name="numberOfSeats">Количество мест</param>
+        /// <param name="soldTickets">Количество проданных билетов</param>
+        /// <param name="number">Номер вокзала</param>
+        /// <param name="averageAttendace">Средняя посещаемость</param>
+        /// <param name="dateOfOpening">Дата открытия</param>
+        /// <param name="address">Адрес вокзала</param>
         public Station(string title, int numberOfSeats, int soldTickets,
-            string number, double averageAttendace, DateTime yearOfOpening, string address) : this()
+            string number, double averageAttendace, DateTime dateOfOpening, string address) : this(title, numberOfSeats)
         {
-            Title = title;
-            NumberOfSeats = numberOfSeats;
             SoldTickets = soldTickets;
             Number = number;
             AverageAttendace = averageAttendace;
-            DateOfOpening = yearOfOpening;
+            DateOfOpening = dateOfOpening;
             Address = address;
         }
 
+        /// <summary>
+        /// Метод возращает количеств мест в 16 СС
+        /// </summary>
+        /// <returns></returns>
         public string NumberOfSeatsToHex()
         {
             if (NumberOfSeats == null)
-                return "";
+                return string.Empty;
             return Convert.ToString((int)NumberOfSeats, 16);
         }
 
+        /// <summary>
+        /// Метод возвращает значение поля по его названию
+        /// </summary>
+        /// <param name="fieldName">Название поля</param>
+        /// <returns></returns>
         public string? GetFieldValue(Fields fieldName) =>
             fieldName switch
             {
@@ -154,6 +194,10 @@ namespace Lr1
                 _ => "",
             };
 
+        /// <summary>
+        /// Метод возвращает строковое представление вокзала
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -166,5 +210,29 @@ namespace Lr1
             if (Address != null) sb.Append($"Адрес: {Address}\n");
             return sb.ToString();
         }
+    }
+
+    /// <summary>
+    /// Представляет исключение, возникающее при отрицательном значении числового поля 
+    /// </summary>
+    public class NegativeValueException : Exception
+    {
+        public NegativeValueException(string msg) : base($"{msg} не может быть отрицательнным числом") { }
+    }
+
+    /// <summary>
+    /// Представляет исключение, возникающее при неверном формате номера
+    /// </summary>
+    public class WrongNumberFormatException : Exception
+    {
+        public WrongNumberFormatException() : base("Неверный формат номера") { }
+    }
+
+    /// <summary>
+    /// Представляет исключение, возникающее при некорректной дате открытия
+    /// </summary>
+    public class InvalidDateOfOpeningException : Exception
+    {
+        public InvalidDateOfOpeningException() : base("Некорректная дата") { }
     }
 }
