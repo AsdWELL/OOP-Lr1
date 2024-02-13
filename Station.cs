@@ -33,9 +33,9 @@ namespace Lr1
             public WrongNumberFormatException() : base("Неверный формат номера") { }
         }
 
-        public class InvalidYearOfOpeningException : Exception
+        public class InvalidDateOfOpeningException : Exception
         {
-            public InvalidYearOfOpeningException(int year) : base($"Год открытия не может быть меньше 1931 и больше {year}") { }
+            public InvalidDateOfOpeningException() : base("Некорректная дата") { }
         }
 
         public string Title { get; set; }
@@ -94,9 +94,9 @@ namespace Lr1
             get => _dateOfOpening;
             set
             {
-                int currentYear = DateTime.Now.Year;
-                if (value.Year < 1931 || value.Year > currentYear)
-                    throw new InvalidYearOfOpeningException(currentYear);
+                DateTime currentDate = DateTime.Now;
+                if (value.Year < 1931 || value > currentDate)
+                    throw new InvalidDateOfOpeningException();
                 _dateOfOpening = value;
             }
         }

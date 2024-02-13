@@ -1,6 +1,7 @@
 using static System.Collections.Specialized.BitVector32;
 using System.Linq;
 using System.ComponentModel;
+using static Lr1.Station;
 
 namespace Lr1
 {
@@ -70,11 +71,29 @@ namespace Lr1
         {
             Station station = _stations[Stations.SelectedIndex];
             station.Title = Title.Text;
-            station.NumberOfSeats = Convert.ToInt32(NumberOfSeats.Text);
-            station.SoldTickets = Convert.ToInt32(SoldTickets.Text);
-            station.AverageAttendace = Convert.ToDouble(AverageAttendace.Text.Replace('.', ','));
-            station.Number = Number.Text;
-            station.DateOfOpening = DateOfOpening.Value;
+            try
+            {
+                station.NumberOfSeats = Convert.ToInt32(NumberOfSeats.Text);
+                station.SoldTickets = Convert.ToInt32(SoldTickets.Text);
+                station.AverageAttendace = Convert.ToDouble(AverageAttendace.Text.Replace('.', ','));
+            } catch(FormatException ex)
+            {
+                MessageBox.Show("Неправильные числовые данные");
+            }
+            try
+            {
+                station.Number = Number.Text;
+            } catch(Station.WrongNumberFormatException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            try
+            {
+                station.DateOfOpening = DateOfOpening.Value;
+            } catch(InvalidDateOfOpeningException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             station.Address = Address.Text;
             _stations[Stations.SelectedIndex] = station;
             SetInfo();
