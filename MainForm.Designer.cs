@@ -42,12 +42,13 @@
             Number = new TextBox();
             Address = new TextBox();
             DateOfOpening = new DateTimePicker();
-            Info = new Label();
+            InfoLabel = new Label();
             UpdateStationBtn = new Button();
-            Stations = new ComboBox();
+            StationsComboBox = new ComboBox();
             AddNewStationBtn = new Button();
-            FieldsLabels = new ComboBox();
-            FieldValue = new Label();
+            FieldsLabelsComboBox = new ComboBox();
+            FieldValueLabel = new Label();
+            DeleteStationBtn = new Button();
             SuspendLayout();
             // 
             // label1
@@ -204,21 +205,22 @@
             DateOfOpening.TabIndex = 14;
             DateOfOpening.Value = new DateTime(2024, 2, 12, 0, 0, 0, 0);
             // 
-            // Info
+            // InfoLabel
             // 
-            Info.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            Info.AutoSize = true;
-            Info.Font = new Font("Segoe UI", 12F);
-            Info.Location = new Point(14, 432);
-            Info.Name = "Info";
-            Info.Size = new Size(0, 28);
-            Info.TabIndex = 18;
+            InfoLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            InfoLabel.AutoSize = true;
+            InfoLabel.Font = new Font("Segoe UI", 12F);
+            InfoLabel.Location = new Point(14, 432);
+            InfoLabel.Name = "InfoLabel";
+            InfoLabel.Size = new Size(46, 28);
+            InfoLabel.TabIndex = 18;
+            InfoLabel.Text = "info";
             // 
             // UpdateStationBtn
             // 
-            UpdateStationBtn.Anchor = AnchorStyles.Left;
+            UpdateStationBtn.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             UpdateStationBtn.Font = new Font("Segoe UI", 12F);
-            UpdateStationBtn.Location = new Point(14, 365);
+            UpdateStationBtn.Location = new Point(270, 365);
             UpdateStationBtn.Name = "UpdateStationBtn";
             UpdateStationBtn.Size = new Size(200, 44);
             UpdateStationBtn.TabIndex = 19;
@@ -226,23 +228,23 @@
             UpdateStationBtn.UseVisualStyleBackColor = true;
             UpdateStationBtn.Click += UpdateStationBtn_Click;
             // 
-            // Stations
+            // StationsComboBox
             // 
-            Stations.Anchor = AnchorStyles.Right;
-            Stations.DropDownStyle = ComboBoxStyle.DropDownList;
-            Stations.Font = new Font("Segoe UI", 12F);
-            Stations.FormattingEnabled = true;
-            Stations.Location = new Point(490, 370);
-            Stations.Name = "Stations";
-            Stations.Size = new Size(200, 36);
-            Stations.TabIndex = 20;
-            Stations.SelectedIndexChanged += Stations_SelectedIndexChanged;
+            StationsComboBox.Anchor = AnchorStyles.Left;
+            StationsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            StationsComboBox.Font = new Font("Segoe UI", 12F);
+            StationsComboBox.FormattingEnabled = true;
+            StationsComboBox.Location = new Point(14, 370);
+            StationsComboBox.Name = "StationsComboBox";
+            StationsComboBox.Size = new Size(200, 36);
+            StationsComboBox.TabIndex = 20;
+            StationsComboBox.SelectedIndexChanged += Stations_SelectedIndexChanged;
             // 
             // AddNewStationBtn
             // 
-            AddNewStationBtn.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            AddNewStationBtn.Anchor = AnchorStyles.Right;
             AddNewStationBtn.Font = new Font("Segoe UI", 12F);
-            AddNewStationBtn.Location = new Point(270, 365);
+            AddNewStationBtn.Location = new Point(490, 365);
             AddNewStationBtn.Name = "AddNewStationBtn";
             AddNewStationBtn.Size = new Size(200, 44);
             AddNewStationBtn.TabIndex = 21;
@@ -250,40 +252,54 @@
             AddNewStationBtn.UseVisualStyleBackColor = true;
             AddNewStationBtn.Click += AddNewStationBtn_Click;
             // 
-            // FieldsLabels
+            // FieldsLabelsComboBox
             // 
-            FieldsLabels.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            FieldsLabels.DropDownStyle = ComboBoxStyle.DropDownList;
-            FieldsLabels.Font = new Font("Segoe UI", 12F);
-            FieldsLabels.FormattingEnabled = true;
-            FieldsLabels.Items.AddRange(new object[] { "Название вокзала", "Количество мест в 16СС", "Продано билетов", "Телефонный номер", "Средняя посещаемость", "Дата открытия", "Адрес" });
-            FieldsLabels.Location = new Point(14, 775);
-            FieldsLabels.Name = "FieldsLabels";
-            FieldsLabels.Size = new Size(260, 36);
-            FieldsLabels.TabIndex = 23;
-            FieldsLabels.SelectedIndexChanged += FieldsLabels_SelectedIndexChanged;
+            FieldsLabelsComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            FieldsLabelsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            FieldsLabelsComboBox.Font = new Font("Segoe UI", 12F);
+            FieldsLabelsComboBox.FormattingEnabled = true;
+            FieldsLabelsComboBox.Items.AddRange(new object[] { "Название вокзала", "Количество мест в 16СС", "Продано билетов", "Телефонный номер", "Средняя посещаемость", "Дата открытия", "Адрес" });
+            FieldsLabelsComboBox.Location = new Point(14, 775);
+            FieldsLabelsComboBox.Name = "FieldsLabelsComboBox";
+            FieldsLabelsComboBox.Size = new Size(260, 36);
+            FieldsLabelsComboBox.TabIndex = 23;
+            FieldsLabelsComboBox.SelectedIndexChanged += FieldsLabels_SelectedIndexChanged;
             // 
-            // FieldValue
+            // FieldValueLabel
             // 
-            FieldValue.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            FieldValue.AutoSize = true;
-            FieldValue.Font = new Font("Segoe UI", 12F);
-            FieldValue.Location = new Point(312, 783);
-            FieldValue.Name = "FieldValue";
-            FieldValue.Size = new Size(0, 28);
-            FieldValue.TabIndex = 24;
+            FieldValueLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            FieldValueLabel.AutoSize = true;
+            FieldValueLabel.Font = new Font("Segoe UI", 12F);
+            FieldValueLabel.Location = new Point(312, 783);
+            FieldValueLabel.Name = "FieldValueLabel";
+            FieldValueLabel.Size = new Size(46, 28);
+            FieldValueLabel.TabIndex = 24;
+            FieldValueLabel.Text = "info";
+            // 
+            // DeleteStationBtn
+            // 
+            DeleteStationBtn.Anchor = AnchorStyles.Right;
+            DeleteStationBtn.Font = new Font("Segoe UI", 12F);
+            DeleteStationBtn.Location = new Point(490, 432);
+            DeleteStationBtn.Name = "DeleteStationBtn";
+            DeleteStationBtn.Size = new Size(200, 44);
+            DeleteStationBtn.TabIndex = 25;
+            DeleteStationBtn.Text = "Удалить текущий";
+            DeleteStationBtn.UseVisualStyleBackColor = true;
+            DeleteStationBtn.Click += DeleteStationBtn_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(702, 920);
-            Controls.Add(FieldValue);
-            Controls.Add(FieldsLabels);
+            Controls.Add(DeleteStationBtn);
+            Controls.Add(FieldValueLabel);
+            Controls.Add(FieldsLabelsComboBox);
             Controls.Add(AddNewStationBtn);
-            Controls.Add(Stations);
+            Controls.Add(StationsComboBox);
             Controls.Add(UpdateStationBtn);
-            Controls.Add(Info);
+            Controls.Add(InfoLabel);
             Controls.Add(DateOfOpening);
             Controls.Add(Address);
             Controls.Add(Number);
@@ -302,6 +318,7 @@
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Вокзал";
+            Load += MainForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -322,11 +339,12 @@
         private TextBox Number;
         private TextBox Address;
         private DateTimePicker DateOfOpening;
-        private Label Info;
+        private Label InfoLabel;
         private Button UpdateStationBtn;
-        private ComboBox Stations;
+        private ComboBox StationsComboBox;
         private Button AddNewStationBtn;
-        private ComboBox FieldsLabels;
-        private Label FieldValue;
+        private ComboBox FieldsLabelsComboBox;
+        private Label FieldValueLabel;
+        private Button DeleteStationBtn;
     }
 }

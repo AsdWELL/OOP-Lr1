@@ -27,6 +27,11 @@ namespace Lr1
         }
 
         /// <summary>
+        /// Год открытия первого вокзала
+        /// </summary>
+        public const int FirstStationYearOfOpening = 1931;
+
+        /// <summary>
         /// Название вокзала
         /// </summary>
         public string Title { get; set; }
@@ -101,7 +106,7 @@ namespace Lr1
             set
             {
                 DateTime currentDate = DateTime.Now;
-                if (value.Year < 1931 || value > currentDate)
+                if (value.Year < FirstStationYearOfOpening || value > currentDate)
                     throw new InvalidDateOfOpeningException();
                 _dateOfOpening = value;
             }
@@ -115,7 +120,7 @@ namespace Lr1
         /// <summary>
         /// Количество созданных вокзалов
         /// </summary>
-        public static int TotalStations { get; private set; }
+        public static int TotalStations { get; set; }
 
         /// <summary>
         /// Конструктор бзе параметров
