@@ -2,6 +2,7 @@ using static System.Collections.Specialized.BitVector32;
 using System.Linq;
 using System.ComponentModel;
 using static Lr1.Station;
+using System.Drawing.Text;
 
 namespace Lr1
 {
@@ -26,7 +27,9 @@ namespace Lr1
         private void MainForm_Load(object sender, EventArgs e)
         {
             _stations.OnAdd += s => StationsComboBox.Items.Add(s.Title);
+            _stations.OnAdd += s => MessageBox.Show($"Станция добавлена");
             _stations.OnRemove += s => StationsComboBox.Items.Remove(s.Title);
+            _stations.OnRemove += s => MessageBox.Show($"Станция удалена");
             _stations.OnUpdate += (s, i) => StationsComboBox.Items[i] = s.Title;
             _stations.AddRange(
                 new Station("Пенза 1", 120, 3020, "+79875634543", 78.6, DateTime.Now, "Володарского 12"),
