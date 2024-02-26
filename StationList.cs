@@ -87,11 +87,20 @@ namespace Lr1
         }
 
         /// <summary>
-        /// Конструктор
+        /// Создаёт пустой список станций
         /// </summary>
         public StationList()
         {
             _stations = new List<Station>();
+        }
+
+        /// <summary>
+        /// Создаёт пустой список на указанное количество станций
+        /// </summary>
+        /// <param name="count">Количестов станций</param>
+        public StationList(int count)
+        {
+            _stations = new List<Station>(count);
         }
 
         /// <summary>
@@ -139,36 +148,6 @@ namespace Lr1
             OnRemove?.Invoke(station);
         }
 
-        private class StationEnumerator : IEnumerator
-        {
-            private List<Station> _list;
-            private int pos = -1;
-            
-            public StationEnumerator(List<Station> list) => _list = list;
-
-            public object Current
-            {
-                get
-                {
-                    try
-                    {
-                        return _list[pos];
-                    }
-                    catch
-                    {
-                        throw new InvalidOperationException();
-                    }
-                }
-            }
-
-            public bool MoveNext() => ++pos < _list.Count;
-
-            public void Reset() => pos = -1;
-        }
-
-        public IEnumerator GetEnumerator()
-        {
-            return new StationEnumerator(_stations);
-        }
+        public IEnumerator GetEnumerator() => _stations.GetEnumerator();
     }
 }

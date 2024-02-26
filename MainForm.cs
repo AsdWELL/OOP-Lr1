@@ -3,6 +3,7 @@ using System.Linq;
 using System.ComponentModel;
 using static Lr1.Station;
 using System.Drawing.Text;
+using System.Text;
 
 namespace Lr1
 {
@@ -27,9 +28,7 @@ namespace Lr1
         private void MainForm_Load(object sender, EventArgs e)
         {
             _stations.OnAdd += s => StationsComboBox.Items.Add(s.Title);
-            _stations.OnAdd += s => MessageBox.Show($"Станция добавлена");
             _stations.OnRemove += s => StationsComboBox.Items.Remove(s.Title);
-            _stations.OnRemove += s => MessageBox.Show($"Станция удалена");
             _stations.OnUpdate += (s, i) => StationsComboBox.Items[i] = s.Title;
             _stations.AddRange(
                 new Station("Пенза 1", 120, 3020, "+79875634543", 78.6, DateTime.Now, "Володарского 12"),
@@ -40,6 +39,8 @@ namespace Lr1
             FieldsLabelsComboBox.SelectedIndex = 0;
             DateOfOpening.Format = DateTimePickerFormat.Custom;
             DateOfOpening.CustomFormat = "dd MM yyyy";
+            _stations.OnAdd += s => MessageBox.Show("Станция добавлена");
+            _stations.OnRemove += s => MessageBox.Show($"Станция {s.Title} удалена");
             //MessageBox.Show("Годов и Поршнев 22ВП1\nВариант 3", "Лабораторная работа №2");
             SetStationInfo();
         }
@@ -179,6 +180,22 @@ namespace Lr1
         {
             FieldValueLabel.Text = _stations[StationsComboBox.SelectedIndex]
                 .GetFieldValue((Station.Fields)FieldsLabelsComboBox.SelectedIndex);
+        }
+
+        private void AllStationInfoBtn_Click(object sender, EventArgs e)
+        {
+            StationsInfoForm stationsInfoForm = new StationsInfoForm();
+            stationsInfoForm.Show();
+            StringBuilder sb = new StringBuilder();
+            foreach (Station station in _stations)
+                sb.Append($"{station}\n");
+            stationsInfoForm.StationsInfoTextBox.Text = sb.ToString().Replace("\n", Environment.NewLine);
+        }
+
+        private void ComparisonBtn_Click(object sender, EventArgs e)
+        {
+            ComparisonForm comparisonForm = new ComparisonForm();
+            comparisonForm.Show();
         }
     }
 }

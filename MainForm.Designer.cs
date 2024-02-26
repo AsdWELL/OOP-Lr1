@@ -49,6 +49,8 @@
             FieldsLabelsComboBox = new ComboBox();
             FieldValueLabel = new Label();
             DeleteStationBtn = new Button();
+            AllStationInfoBtn = new Button();
+            ComparisonBtn = new Button();
             SuspendLayout();
             // 
             // label1
@@ -288,11 +290,37 @@
             DeleteStationBtn.UseVisualStyleBackColor = true;
             DeleteStationBtn.Click += DeleteStationBtn_Click;
             // 
+            // AllStationInfoBtn
+            // 
+            AllStationInfoBtn.Anchor = AnchorStyles.Right;
+            AllStationInfoBtn.Font = new Font("Segoe UI", 12F);
+            AllStationInfoBtn.Location = new Point(490, 496);
+            AllStationInfoBtn.Name = "AllStationInfoBtn";
+            AllStationInfoBtn.Size = new Size(200, 44);
+            AllStationInfoBtn.TabIndex = 26;
+            AllStationInfoBtn.Text = "Все станции";
+            AllStationInfoBtn.UseVisualStyleBackColor = true;
+            AllStationInfoBtn.Click += AllStationInfoBtn_Click;
+            // 
+            // ComparisonBtn
+            // 
+            ComparisonBtn.Anchor = AnchorStyles.Right;
+            ComparisonBtn.Font = new Font("Segoe UI", 12F);
+            ComparisonBtn.Location = new Point(490, 558);
+            ComparisonBtn.Name = "ComparisonBtn";
+            ComparisonBtn.Size = new Size(200, 44);
+            ComparisonBtn.TabIndex = 27;
+            ComparisonBtn.Text = "Сравнение";
+            ComparisonBtn.UseVisualStyleBackColor = true;
+            ComparisonBtn.Click += ComparisonBtn_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(702, 920);
+            Controls.Add(ComparisonBtn);
+            Controls.Add(AllStationInfoBtn);
             Controls.Add(DeleteStationBtn);
             Controls.Add(FieldValueLabel);
             Controls.Add(FieldsLabelsComboBox);
@@ -346,5 +374,7 @@
         private ComboBox FieldsLabelsComboBox;
         private Label FieldValueLabel;
         private Button DeleteStationBtn;
+        private Button AllStationInfoBtn;
+        private Button ComparisonBtn;
     }
 }
