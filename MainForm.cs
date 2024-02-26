@@ -14,10 +14,13 @@ namespace Lr1
         /// </summary>
         private static StationList _stations;
 
+        private static MessageForm _messageForm;
+
         public MainForm()
         {
             InitializeComponent();
             _stations = new StationList();
+            _messageForm = new MessageForm();
         }
 
         /// <summary>
@@ -39,8 +42,8 @@ namespace Lr1
             FieldsLabelsComboBox.SelectedIndex = 0;
             DateOfOpening.Format = DateTimePickerFormat.Custom;
             DateOfOpening.CustomFormat = "dd MM yyyy";
-            _stations.OnAdd += s => MessageBox.Show("Станция добавлена");
-            _stations.OnRemove += s => MessageBox.Show($"Станция {s.Title} удалена");
+            _stations.OnAdd += s => _messageForm.Show("Добавлена новая станция");
+            _stations.OnRemove += s => _messageForm.Show($"Станция {s.Title} удалена");
             //MessageBox.Show("Годов и Поршнев 22ВП1\nВариант 3", "Лабораторная работа №2");
             SetStationInfo();
         }

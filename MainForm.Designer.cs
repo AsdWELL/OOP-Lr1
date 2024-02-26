@@ -250,7 +250,7 @@
             AddNewStationBtn.Name = "AddNewStationBtn";
             AddNewStationBtn.Size = new Size(200, 44);
             AddNewStationBtn.TabIndex = 21;
-            AddNewStationBtn.Text = "Добавить новый";
+            AddNewStationBtn.Text = "Создать новый";
             AddNewStationBtn.UseVisualStyleBackColor = true;
             AddNewStationBtn.Click += AddNewStationBtn_Click;
             // 
