@@ -50,7 +50,8 @@
             FieldValueLabel = new Label();
             DeleteStationBtn = new Button();
             AllStationInfoBtn = new Button();
-            ComparisonBtn = new Button();
+            StationTypeComboBox = new ComboBox();
+            label8 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -67,7 +68,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft Sans Serif", 12F);
-            label2.Location = new Point(14, 80);
+            label2.Location = new Point(14, 81);
             label2.Name = "label2";
             label2.Size = new Size(178, 25);
             label2.TabIndex = 1;
@@ -77,7 +78,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Microsoft Sans Serif", 12F);
-            label3.Location = new Point(14, 121);
+            label3.Location = new Point(14, 126);
             label3.Name = "label3";
             label3.Size = new Size(175, 25);
             label3.TabIndex = 2;
@@ -87,7 +88,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Microsoft Sans Serif", 12F);
-            label4.Location = new Point(14, 165);
+            label4.Location = new Point(14, 171);
             label4.Name = "label4";
             label4.Size = new Size(201, 25);
             label4.TabIndex = 3;
@@ -97,7 +98,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Microsoft Sans Serif", 12F);
-            label5.Location = new Point(14, 211);
+            label5.Location = new Point(14, 216);
             label5.Name = "label5";
             label5.Size = new Size(238, 25);
             label5.TabIndex = 4;
@@ -107,7 +108,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Microsoft Sans Serif", 12F);
-            label6.Location = new Point(14, 257);
+            label6.Location = new Point(14, 261);
             label6.Name = "label6";
             label6.Size = new Size(158, 25);
             label6.TabIndex = 5;
@@ -117,7 +118,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Microsoft Sans Serif", 12F);
-            label7.Location = new Point(14, 305);
+            label7.Location = new Point(14, 306);
             label7.Name = "label7";
             label7.Size = new Size(69, 25);
             label7.TabIndex = 6;
@@ -127,7 +128,7 @@
             // 
             AverageAttendace.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             AverageAttendace.Font = new Font("Microsoft Sans Serif", 12F);
-            AverageAttendace.Location = new Point(270, 208);
+            AverageAttendace.Location = new Point(270, 215);
             AverageAttendace.Margin = new Padding(3, 4, 3, 4);
             AverageAttendace.MaxLength = 9;
             AverageAttendace.Name = "AverageAttendace";
@@ -163,7 +164,7 @@
             // 
             SoldTickets.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             SoldTickets.Font = new Font("Microsoft Sans Serif", 12F);
-            SoldTickets.Location = new Point(270, 124);
+            SoldTickets.Location = new Point(270, 127);
             SoldTickets.Margin = new Padding(3, 4, 3, 4);
             SoldTickets.MaxLength = 9;
             SoldTickets.Name = "SoldTickets";
@@ -175,10 +176,10 @@
             // 
             Number.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Number.Font = new Font("Microsoft Sans Serif", 12F);
-            Number.Location = new Point(270, 168);
+            Number.Location = new Point(270, 171);
             Number.Margin = new Padding(3, 4, 3, 4);
             Number.MaxLength = 25;
-            Number.Name = "Number";
+            Number.Name = "PhoneNumber";
             Number.Size = new Size(200, 30);
             Number.TabIndex = 12;
             Number.TextChanged += CheckField;
@@ -187,7 +188,7 @@
             // 
             Address.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Address.Font = new Font("Microsoft Sans Serif", 12F);
-            Address.Location = new Point(270, 308);
+            Address.Location = new Point(270, 303);
             Address.Margin = new Padding(3, 4, 3, 4);
             Address.MaxLength = 25;
             Address.Name = "Address";
@@ -200,7 +201,7 @@
             DateOfOpening.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             DateOfOpening.Font = new Font("Microsoft Sans Serif", 12F);
             DateOfOpening.ImeMode = ImeMode.NoControl;
-            DateOfOpening.Location = new Point(270, 257);
+            DateOfOpening.Location = new Point(270, 259);
             DateOfOpening.Margin = new Padding(3, 4, 3, 4);
             DateOfOpening.Name = "DateOfOpening";
             DateOfOpening.Size = new Size(200, 30);
@@ -212,7 +213,7 @@
             InfoLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             InfoLabel.AutoSize = true;
             InfoLabel.Font = new Font("Segoe UI", 12F);
-            InfoLabel.Location = new Point(14, 432);
+            InfoLabel.Location = new Point(14, 407);
             InfoLabel.Name = "InfoLabel";
             InfoLabel.Size = new Size(46, 28);
             InfoLabel.TabIndex = 18;
@@ -222,7 +223,7 @@
             // 
             UpdateStationBtn.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             UpdateStationBtn.Font = new Font("Segoe UI", 12F);
-            UpdateStationBtn.Location = new Point(270, 365);
+            UpdateStationBtn.Location = new Point(270, 340);
             UpdateStationBtn.Name = "UpdateStationBtn";
             UpdateStationBtn.Size = new Size(200, 44);
             UpdateStationBtn.TabIndex = 19;
@@ -236,7 +237,7 @@
             StationsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             StationsComboBox.Font = new Font("Segoe UI", 12F);
             StationsComboBox.FormattingEnabled = true;
-            StationsComboBox.Location = new Point(14, 370);
+            StationsComboBox.Location = new Point(14, 345);
             StationsComboBox.Name = "StationsComboBox";
             StationsComboBox.Size = new Size(200, 36);
             StationsComboBox.TabIndex = 20;
@@ -246,11 +247,11 @@
             // 
             AddNewStationBtn.Anchor = AnchorStyles.Right;
             AddNewStationBtn.Font = new Font("Segoe UI", 12F);
-            AddNewStationBtn.Location = new Point(490, 365);
+            AddNewStationBtn.Location = new Point(490, 391);
             AddNewStationBtn.Name = "AddNewStationBtn";
             AddNewStationBtn.Size = new Size(200, 44);
             AddNewStationBtn.TabIndex = 21;
-            AddNewStationBtn.Text = "Создать новый";
+            AddNewStationBtn.Text = "Создать вокзал";
             AddNewStationBtn.UseVisualStyleBackColor = true;
             AddNewStationBtn.Click += AddNewStationBtn_Click;
             // 
@@ -282,7 +283,7 @@
             // 
             DeleteStationBtn.Anchor = AnchorStyles.Right;
             DeleteStationBtn.Font = new Font("Segoe UI", 12F);
-            DeleteStationBtn.Location = new Point(490, 432);
+            DeleteStationBtn.Location = new Point(490, 458);
             DeleteStationBtn.Name = "DeleteStationBtn";
             DeleteStationBtn.Size = new Size(200, 44);
             DeleteStationBtn.TabIndex = 25;
@@ -294,7 +295,7 @@
             // 
             AllStationInfoBtn.Anchor = AnchorStyles.Right;
             AllStationInfoBtn.Font = new Font("Segoe UI", 12F);
-            AllStationInfoBtn.Location = new Point(490, 496);
+            AllStationInfoBtn.Location = new Point(490, 522);
             AllStationInfoBtn.Name = "AllStationInfoBtn";
             AllStationInfoBtn.Size = new Size(200, 44);
             AllStationInfoBtn.TabIndex = 26;
@@ -302,24 +303,36 @@
             AllStationInfoBtn.UseVisualStyleBackColor = true;
             AllStationInfoBtn.Click += AllStationInfoBtn_Click;
             // 
-            // ComparisonBtn
+            // StationTypeComboBox
             // 
-            ComparisonBtn.Anchor = AnchorStyles.Right;
-            ComparisonBtn.Font = new Font("Segoe UI", 12F);
-            ComparisonBtn.Location = new Point(490, 558);
-            ComparisonBtn.Name = "ComparisonBtn";
-            ComparisonBtn.Size = new Size(200, 44);
-            ComparisonBtn.TabIndex = 27;
-            ComparisonBtn.Text = "Сравнение";
-            ComparisonBtn.UseVisualStyleBackColor = true;
-            ComparisonBtn.Click += ComparisonBtn_Click;
+            StationTypeComboBox.Anchor = AnchorStyles.Right;
+            StationTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            StationTypeComboBox.Font = new Font("Segoe UI", 12F);
+            StationTypeComboBox.FormattingEnabled = true;
+            StationTypeComboBox.Items.AddRange(new object[] { "Автобусный", "Ж/д" });
+            StationTypeComboBox.Location = new Point(490, 345);
+            StationTypeComboBox.Name = "StationTypeComboBox";
+            StationTypeComboBox.Size = new Size(200, 36);
+            StationTypeComboBox.TabIndex = 28;
+            // 
+            // label8
+            // 
+            label8.Anchor = AnchorStyles.Right;
+            label8.AutoSize = true;
+            label8.Font = new Font("Microsoft Sans Serif", 12F);
+            label8.Location = new Point(528, 306);
+            label8.Name = "label8";
+            label8.Size = new Size(125, 25);
+            label8.TabIndex = 29;
+            label8.Text = "Тип вокзала";
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(702, 920);
-            Controls.Add(ComparisonBtn);
+            Controls.Add(label8);
+            Controls.Add(StationTypeComboBox);
             Controls.Add(AllStationInfoBtn);
             Controls.Add(DeleteStationBtn);
             Controls.Add(FieldValueLabel);
@@ -375,6 +388,7 @@
         private Label FieldValueLabel;
         private Button DeleteStationBtn;
         private Button AllStationInfoBtn;
-        private Button ComparisonBtn;
+        private ComboBox StationTypeComboBox;
+        private Label label8;
     }
 }

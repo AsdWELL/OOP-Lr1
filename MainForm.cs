@@ -16,11 +16,17 @@ namespace Lr1
 
         private static MessageForm _messageForm;
 
+        private static BusStationFactory _busStationFactory;
+
+        private static TrainStationFactory _trainStationFactory;
+
         public MainForm()
         {
             InitializeComponent();
             _stations = new StationList();
             _messageForm = new MessageForm();
+            _busStationFactory = new BusStationFactory();
+            _trainStationFactory = new TrainStationFactory();
         }
 
         /// <summary>
@@ -33,18 +39,26 @@ namespace Lr1
             _stations.OnAdd += s => StationsComboBox.Items.Add(s.Title);
             _stations.OnRemove += s => StationsComboBox.Items.Remove(s.Title);
             _stations.OnUpdate += (s, i) => StationsComboBox.Items[i] = s.Title;
+
             _stations.AddRange(
-                new Station("Пенза 1", 120, 3020, "+79875634543", 78.6, DateTime.Now, "Володарского 12"),
-                new Station("Пенза 2", 10, 3020, "+79888888883", 234.9, DateTime.Now, "Володарского 13"),
-                new Station("Пенза 3", 12370, 3020, "+71234567890", 13.2, DateTime.Now, "Володарского 14")
+                new BusStation("Пенза 1", 120, 3020, "+79875634543", 78.6, DateTime.Now, "Володарского 12"),
+                new TrainStation("Пенза 2", 10, 3020, "+79888888883", 234.9, DateTime.Now, "Володарского 13"),
+                new TrainStation("Пенза 3", 12370, 3020, "+71234567890", 13.2, DateTime.Now, "Володарского 14")
             );
+
             StationsComboBox.SelectedIndex = 0;
+            StationTypeComboBox.SelectedIndex = 0;
             FieldsLabelsComboBox.SelectedIndex = 0;
+
             DateOfOpening.Format = DateTimePickerFormat.Custom;
             DateOfOpening.CustomFormat = "dd MM yyyy";
-            _stations.OnAdd += s => _messageForm.Show("Добавлена новая станция");
-            _stations.OnRemove += s => _messageForm.Show($"Станция {s.Title} удалена");
-            //MessageBox.Show("Годов и Поршнев 22ВП1\nВариант 3", "Лабораторная работа №2");
+
+            _stations.OnAdd += s => _messageForm.Show($"Добавлен новый " +
+                $"{StationTypeComboBox.SelectedItem.ToString().ToLower()} вокзал");
+            _stations.OnRemove += s => _messageForm.Show($"{StationTypeComboBox.SelectedItem} вокзал {s.Title} удален");
+
+            MessageBox.Show("Годов и Поршнев 22ВП1\nВариант 10", "Лабораторная работа №3");
+
             SetStationInfo();
         }
 
@@ -55,17 +69,18 @@ namespace Lr1
         /// <param name="e"></param>
         private void CheckField(object sender, EventArgs e)
         {
+            bool isEnabled = true;
+
             foreach (var i in Controls.OfType<TextBox>())
-                if (i.Text.Length == 0)
+                if (string.IsNullOrWhiteSpace(i.Text))
                 {
-                    UpdateStationBtn.Enabled = false;
-                    AddNewStationBtn.Enabled = false;
-                    StationsComboBox.Enabled = false;
-                    return;
+                    isEnabled = false;
+                    break;
                 }
-            UpdateStationBtn.Enabled = true;
-            AddNewStationBtn.Enabled = true;
-            StationsComboBox.Enabled = true;
+
+            UpdateStationBtn.Enabled = isEnabled;
+            AddNewStationBtn.Enabled = isEnabled;
+            StationsComboBox.Enabled = isEnabled;
         }
 
         /// <summary>
@@ -78,25 +93,46 @@ namespace Lr1
         }
 
         /// <summary>
+        /// Проверяет, что выбранный индекс не выходит за границы массива
+        /// </summary>
+        /// <returns>Вокзал по выбранному индексу</returns>
+        /// <exception cref="IndexOutOfRangeException">Возникает в случае выхода за границы</exception>
+        private Station CheckAndGetSelectedStation()
+        {
+            if (StationsComboBox.SelectedIndex < 0 || StationsComboBox.SelectedIndex > _stations.Count)
+                throw new IndexOutOfRangeException();
+            return _stations[StationsComboBox.SelectedIndex];
+        }
+
+        /// <summary>
         /// Метод устанавливает в текстбоксы поля выбранного вокзала
         /// </summary>
         private void SetStationInfo()
         {
-            Station station = _stations[StationsComboBox.SelectedIndex];
+            Station station = CheckAndGetSelectedStation();
+
             Title.Text = station.Title;
             NumberOfSeats.Text = station.NumberOfSeats.ToString();
             SoldTickets.Text = station.SoldTickets.ToString();
-            Number.Text = station.Number;
+            Number.Text = station.PhoneNumber;
             AverageAttendace.Text = station.AverageAttendace.ToString();
             DateOfOpening.Value = station.DateOfOpening;
             Address.Text = station.Address;
+
             SetInfoLabel();
         }
 
         private void Stations_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetStationInfo();
-            FieldsLabels_SelectedIndexChanged(sender, e);
+            try
+            {
+                SetStationInfo();
+                FieldsLabels_SelectedIndexChanged(sender, e);
+            } 
+            catch (IndexOutOfRangeException)
+            {
+                MessageBox.Show("Ошибка в выборе вокзала", "Внимание");
+            }
         }
 
         /// <summary>
@@ -107,9 +143,21 @@ namespace Lr1
         /// <param name="e"></param>
         private void UpdateStationBtn_Click(object sender, EventArgs e)
         {
-            Station station = _stations[StationsComboBox.SelectedIndex];
+            Station station;
+
+            try
+            {
+                station = CheckAndGetSelectedStation();
+            }
+            catch (IndexOutOfRangeException)
+            {
+                MessageBox.Show("Ошибка в выборе вокзала", "Внимание");
+                return;
+            }
+
             station.Title = Title.Text;
             station.Address = Address.Text;
+
             try
             {
                 station.NumberOfSeats = Convert.ToInt32(NumberOfSeats.Text);
@@ -124,24 +172,22 @@ namespace Lr1
             {
                 MessageBox.Show(ex.Message, "Ошибка");
             }
-            try
+
+            if (!station.CheckAndSetPhoneNumber(Number.Text))
             {
-                station.Number = Number.Text;
+                MessageBox.Show("Неверный формат номера", "Ошибка");
+                return;
             }
-            catch (WrongNumberFormatException ex)
+
+            if (!station.CheckAndSetDateOtOpening(DateOfOpening.Value))
             {
-                MessageBox.Show(ex.Message, "Ошибка");
+                MessageBox.Show("Выбрана некорректная дата", "Ошибка");
+                return;
             }
-            try
-            {
-                station.DateOfOpening = DateOfOpening.Value;
-            }
-            catch (InvalidDateOfOpeningException ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка");
-            }
+
             _stations[StationsComboBox.SelectedIndex] = station;
             SetInfoLabel();
+
             if (FieldsLabelsComboBox.SelectedIndex >= 0)
                 FieldsLabels_SelectedIndexChanged(FieldsLabelsComboBox, e);
         }
@@ -155,8 +201,15 @@ namespace Lr1
         private void AddNewStationBtn_Click(object sender, EventArgs e)
         {
             UpdateStationBtn_Click(sender, e);
+
             DeleteStationBtn.Enabled = true;
-            Station station = new Station("Новый вокзал");
+
+            Station station = StationTypeComboBox.SelectedIndex switch
+            {
+                0 => _busStationFactory.CreateStation("Новый вокзал"),
+                1 => _trainStationFactory.CreateStation("Новый вокзал")
+            }; 
+
             _stations.Add(station);
             StationsComboBox.SelectedIndex = _stations.Count - 1;
         }
@@ -193,12 +246,6 @@ namespace Lr1
             foreach (Station station in _stations)
                 sb.Append($"{station}\n");
             stationsInfoForm.StationsInfoTextBox.Text = sb.ToString().Replace("\n", Environment.NewLine);
-        }
-
-        private void ComparisonBtn_Click(object sender, EventArgs e)
-        {
-            ComparisonForm comparisonForm = new ComparisonForm();
-            comparisonForm.Show();
         }
     }
 }

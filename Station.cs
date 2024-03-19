@@ -13,7 +13,7 @@ namespace Lr1
     /// <summary>
     /// Представляет вокзал
     /// </summary>
-    public class Station
+    public abstract class Station
     {
         public enum Fields
         {
@@ -67,18 +67,26 @@ namespace Lr1
         }
 
         /// <summary>
-        /// Номер вокзала
+        /// Проверяет формат телефонного номера и сохраняет его, если он корректный
         /// </summary>
-        private string _number;
-        public string Number
+        /// <param name="rawNumber">Номер телефона</param>
+        /// <returns>True, если номер корректный, иначе False</returns>
+        public bool CheckAndSetPhoneNumber(string rawNumber)
         {
-            get => _number;
-            set
-            {
-                if (!Regex.IsMatch(value, @"^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{10}$"))
-                    throw new WrongNumberFormatException();
-                _number = value;
-            }
+            if (!Regex.IsMatch(rawNumber, @"^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{10}$"))
+                return false;
+            PhoneNumber = rawNumber;
+            return true;
+        }
+
+        /// <summary>
+        /// Телефонный номер вокзала
+        /// </summary>
+        private string _phoneNumber;
+        public string PhoneNumber
+        {
+            get => _phoneNumber;
+            private set => _phoneNumber = value;
         }
 
         /// <summary>
@@ -97,19 +105,27 @@ namespace Lr1
         }
 
         /// <summary>
+        /// Проверяет корректность даты и, если она корректна, сохраняет её
+        /// </summary>
+        /// <param name="dateOfOpening">Дата открытия вокзала</param>
+        /// <returns>True, если дата корректная, иначе False</returns>
+        public bool CheckAndSetDateOtOpening(DateTime dateOfOpening)
+        {
+            DateTime currentDate = DateTime.Now;
+            if (dateOfOpening.Year < FirstStationYearOfOpening || dateOfOpening > currentDate)
+                return false;
+            DateOfOpening = dateOfOpening;
+            return true;
+        }
+
+        /// <summary>
         /// Дата открытия
         /// </summary>
         private DateTime _dateOfOpening;
         public DateTime DateOfOpening
         {
             get => _dateOfOpening;
-            set
-            {
-                DateTime currentDate = DateTime.Now;
-                if (value.Year < FirstStationYearOfOpening || value > currentDate)
-                    throw new InvalidDateOfOpeningException();
-                _dateOfOpening = value;
-            }
+            private set => _dateOfOpening = value;
         }
 
         /// <summary>
@@ -164,7 +180,7 @@ namespace Lr1
             string number, double averageAttendace, DateTime dateOfOpening, string address) : this(title, numberOfSeats)
         {
             SoldTickets = soldTickets;
-            Number = number;
+            PhoneNumber = number;
             AverageAttendace = averageAttendace;
             DateOfOpening = dateOfOpening;
             Address = address;
@@ -191,7 +207,7 @@ namespace Lr1
             {
                 Fields.Title => Title,
                 Fields.NumberOfSeats => NumberOfSeatsToHex(),
-                Fields.Number => Number,
+                Fields.Number => PhoneNumber,
                 Fields.SoldTickets => SoldTickets.ToString(),
                 Fields.AverageAttendace => AverageAttendace.ToString(),
                 Fields.DateOfOpening => DateOfOpening.ToString("d"),
@@ -209,7 +225,7 @@ namespace Lr1
             if (Title != null) sb.Append($"Название вокзала: {Title}\n");
             if (NumberOfSeats != null) sb.Append($"Количество мест: {NumberOfSeats}\n");
             if (SoldTickets != null) sb.Append($"Продано билетов: {SoldTickets}\n");
-            if (Number != null) sb.Append($"Номер: {Number}\n");
+            if (PhoneNumber != null) sb.Append($"Номер: {PhoneNumber}\n");
             if (AverageAttendace != null) sb.Append($"Средняя посещаемость: {AverageAttendace}\n");
             if (DateOfOpening.Year != 1) sb.Append($"Дата открытия: {DateOfOpening.ToString("d")}\n");
             if (Address != null) sb.Append($"Адрес: {Address}\n");
@@ -223,21 +239,5 @@ namespace Lr1
     public class NegativeValueException : Exception
     {
         public NegativeValueException(string msg) : base($"{msg} не может быть отрицательнным числом") { }
-    }
-
-    /// <summary>
-    /// Представляет исключение, возникающее при неверном формате номера
-    /// </summary>
-    public class WrongNumberFormatException : Exception
-    {
-        public WrongNumberFormatException() : base("Неверный формат номера") { }
-    }
-
-    /// <summary>
-    /// Представляет исключение, возникающее при некорректной дате открытия
-    /// </summary>
-    public class InvalidDateOfOpeningException : Exception
-    {
-        public InvalidDateOfOpeningException() : base("Некорректная дата") { }
     }
 }
