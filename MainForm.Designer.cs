@@ -52,6 +52,7 @@
             AllStationInfoBtn = new Button();
             StationTypeComboBox = new ComboBox();
             label8 = new Label();
+            CalculateTicketPriceBtn = new Button();
             SuspendLayout();
             // 
             // label1
@@ -179,7 +180,7 @@
             Number.Location = new Point(270, 171);
             Number.Margin = new Padding(3, 4, 3, 4);
             Number.MaxLength = 25;
-            Number.Name = "PhoneNumber";
+            Number.Name = "Number";
             Number.Size = new Size(200, 30);
             Number.TabIndex = 12;
             Number.TextChanged += CheckField;
@@ -326,11 +327,24 @@
             label8.TabIndex = 29;
             label8.Text = "Тип вокзала";
             // 
+            // CalculateTicketPriceBtn
+            // 
+            CalculateTicketPriceBtn.Anchor = AnchorStyles.Right;
+            CalculateTicketPriceBtn.Font = new Font("Segoe UI", 12F);
+            CalculateTicketPriceBtn.Location = new Point(490, 586);
+            CalculateTicketPriceBtn.Name = "CalculateTicketPriceBtn";
+            CalculateTicketPriceBtn.Size = new Size(200, 44);
+            CalculateTicketPriceBtn.TabIndex = 30;
+            CalculateTicketPriceBtn.Text = "Цена билета";
+            CalculateTicketPriceBtn.UseVisualStyleBackColor = true;
+            CalculateTicketPriceBtn.Click += CalculateTicketPriceBtn_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(702, 920);
+            Controls.Add(CalculateTicketPriceBtn);
             Controls.Add(label8);
             Controls.Add(StationTypeComboBox);
             Controls.Add(AllStationInfoBtn);
@@ -390,5 +404,6 @@
         private Button AllStationInfoBtn;
         private ComboBox StationTypeComboBox;
         private Label label8;
+        private Button CalculateTicketPriceBtn;
     }
 }

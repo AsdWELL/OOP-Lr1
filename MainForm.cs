@@ -1,8 +1,3 @@
-using static System.Collections.Specialized.BitVector32;
-using System.Linq;
-using System.ComponentModel;
-using static Lr1.Station;
-using System.Drawing.Text;
 using System.Text;
 
 namespace Lr1
@@ -16,17 +11,11 @@ namespace Lr1
 
         private static MessageForm _messageForm;
 
-        private static BusStationFactory _busStationFactory;
-
-        private static TrainStationFactory _trainStationFactory;
-
         public MainForm()
         {
             InitializeComponent();
             _stations = new StationList();
             _messageForm = new MessageForm();
-            _busStationFactory = new BusStationFactory();
-            _trainStationFactory = new TrainStationFactory();
         }
 
         /// <summary>
@@ -128,7 +117,7 @@ namespace Lr1
             {
                 SetStationInfo();
                 FieldsLabels_SelectedIndexChanged(sender, e);
-            } 
+            }
             catch (IndexOutOfRangeException)
             {
                 MessageBox.Show("Ошибка в выборе вокзала", "Внимание");
@@ -204,13 +193,12 @@ namespace Lr1
 
             DeleteStationBtn.Enabled = true;
 
-            Station station = StationTypeComboBox.SelectedIndex switch
+            _stations.Add(StationTypeComboBox.SelectedIndex switch
             {
-                0 => _busStationFactory.CreateStation("Новый вокзал"),
-                1 => _trainStationFactory.CreateStation("Новый вокзал")
-            }; 
-
-            _stations.Add(station);
+                0 => new BusStation("Новый вокзал"),
+                1 => new TrainStation("Новый вокзал")
+            });
+            
             StationsComboBox.SelectedIndex = _stations.Count - 1;
         }
 
@@ -246,6 +234,11 @@ namespace Lr1
             foreach (Station station in _stations)
                 sb.Append($"{station}\n");
             stationsInfoForm.StationsInfoTextBox.Text = sb.ToString().Replace("\n", Environment.NewLine);
+        }
+
+        private void CalculateTicketPriceBtn_Click(object sender, EventArgs e)
+        {
+            _messageForm.Show($"Цена билета {_stations[StationsComboBox.SelectedIndex].TicketCost}");
         }
     }
 }

@@ -138,6 +138,8 @@ namespace Lr1
         /// </summary>
         public static int TotalStations { get; set; }
 
+        public abstract double TicketCost { get; }
+
         /// <summary>
         /// Конструктор бзе параметров
         /// </summary>
