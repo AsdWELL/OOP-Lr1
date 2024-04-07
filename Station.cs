@@ -217,6 +217,11 @@ namespace Lr1
                 _ => "",
             };
 
+        public void AcceptVisitor(Visitor visitor)
+        {
+            visitor.VisitStation(this);
+        }
+
         /// <summary>
         /// Метод возвращает строковое представление вокзала
         /// </summary>

@@ -53,6 +53,7 @@
             StationTypeComboBox = new ComboBox();
             label8 = new Label();
             CalculateTicketPriceBtn = new Button();
+            CalcProfitBtn = new Button();
             SuspendLayout();
             // 
             // label1
@@ -339,11 +340,24 @@
             CalculateTicketPriceBtn.UseVisualStyleBackColor = true;
             CalculateTicketPriceBtn.Click += CalculateTicketPriceBtn_Click;
             // 
+            // CalcProfitBtn
+            // 
+            CalcProfitBtn.Anchor = AnchorStyles.Right;
+            CalcProfitBtn.Font = new Font("Segoe UI", 12F);
+            CalcProfitBtn.Location = new Point(490, 645);
+            CalcProfitBtn.Name = "CalcProfitBtn";
+            CalcProfitBtn.Size = new Size(200, 44);
+            CalcProfitBtn.TabIndex = 31;
+            CalcProfitBtn.Text = "Выручка вокзала";
+            CalcProfitBtn.UseVisualStyleBackColor = true;
+            CalcProfitBtn.Click += CalcProfitBtn_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(702, 920);
+            Controls.Add(CalcProfitBtn);
             Controls.Add(CalculateTicketPriceBtn);
             Controls.Add(label8);
             Controls.Add(StationTypeComboBox);
@@ -405,5 +419,6 @@
         private ComboBox StationTypeComboBox;
         private Label label8;
         private Button CalculateTicketPriceBtn;
+        private Button CalcProfitBtn;
     }
 }

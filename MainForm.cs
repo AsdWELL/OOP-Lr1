@@ -30,9 +30,9 @@ namespace Lr1
             _stations.OnUpdate += (s, i) => StationsComboBox.Items[i] = s.Title;
 
             _stations.AddRange(
-                new BusStation("Пенза 1", 120, 3020, "+79875634543", 78.6, DateTime.Now, "Володарского 12"),
-                new TrainStation("Пенза 2", 10, 3020, "+79888888883", 234.9, DateTime.Now, "Володарского 13"),
-                new TrainStation("Пенза 3", 12370, 3020, "+71234567890", 13.2, DateTime.Now, "Володарского 14")
+                new BusStation("Пенза 1", 120, 3020, "+79875634543", 78.6, new DateTime(2020, 3, 3), "Володарского 12"),
+                new TrainStation("Пенза 2", 10, 3020, "+79888888883", 234.9, new DateTime(2024, 2, 1), "Володарского 13"),
+                new TrainStation("Пенза 3", 12370, 3020, "+71234567890", 13.2, new DateTime(2022, 10, 23), "Володарского 14")
             );
 
             StationsComboBox.SelectedIndex = 0;
@@ -198,7 +198,7 @@ namespace Lr1
                 0 => new BusStation("Новый вокзал"),
                 1 => new TrainStation("Новый вокзал")
             });
-            
+
             StationsComboBox.SelectedIndex = _stations.Count - 1;
         }
 
@@ -212,6 +212,7 @@ namespace Lr1
         {
             int index = StationsComboBox.SelectedIndex;
             _stations.RemoveAt(index);
+
             if (index == _stations.Count)
                 StationsComboBox.SelectedIndex = _stations.Count - 1;
             else
@@ -230,15 +231,49 @@ namespace Lr1
         {
             StationsInfoForm stationsInfoForm = new StationsInfoForm();
             stationsInfoForm.Show();
+
             StringBuilder sb = new StringBuilder();
             foreach (Station station in _stations)
                 sb.Append($"{station}\n");
+
             stationsInfoForm.StationsInfoTextBox.Text = sb.ToString().Replace("\n", Environment.NewLine);
         }
 
         private void CalculateTicketPriceBtn_Click(object sender, EventArgs e)
         {
-            _messageForm.Show($"Цена билета {_stations[StationsComboBox.SelectedIndex].TicketCost}");
+            Station selectedStation;
+
+            try
+            {
+                selectedStation = CheckAndGetSelectedStation();
+            }
+            catch (IndexOutOfRangeException)
+            {
+                MessageBox.Show("Ошибка в выборе вокзала", "Внимание");
+                return;
+            }
+
+            _messageForm.Show($"Цена билета {selectedStation.TicketCost:C}");
+        }
+
+        private void CalcProfitBtn_Click(object sender, EventArgs e)
+        {
+            Station selectedStation;
+
+            try
+            {
+                selectedStation = CheckAndGetSelectedStation();
+            }
+            catch (IndexOutOfRangeException)
+            {
+                MessageBox.Show("Ошибка в выборе вокзала", "Внимание");
+                return;
+            }
+
+            ProfitVisitor profitVisitor = new ProfitVisitor();
+            selectedStation.AcceptVisitor(profitVisitor);
+
+            _messageForm.Show($"Всего заработано {profitVisitor.TotalProfit:C}");
         }
     }
 }
