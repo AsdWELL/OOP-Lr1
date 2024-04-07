@@ -40,6 +40,8 @@ namespace Lr1
             string number, double averageAttendace, DateTime dateOfOpening, string address)
             : base(title, numberOfSeats, soldTickets, number, averageAttendace, dateOfOpening, address) { }
 
+        public override double TicketCost { get; } = 5000;
+
         public override string ToString()
         {
             return "Ж/д вокзал\n" + base.ToString();
