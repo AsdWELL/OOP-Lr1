@@ -188,6 +188,17 @@ namespace Lr1
             Address = address;
         }
 
+        public Station(Station station)
+        {
+            Title = station.Title;
+            NumberOfSeats = station.NumberOfSeats;
+            SoldTickets = station.SoldTickets;
+            PhoneNumber = station.PhoneNumber;
+            AverageAttendace = station.AverageAttendace;
+            DateOfOpening = station.DateOfOpening;
+            Address = station.Address;
+        }
+
         /// <summary>
         /// Метод возращает количеств мест в 16 СС
         /// </summary>

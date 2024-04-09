@@ -8,19 +8,18 @@ namespace Lr1
 {
     public class DiscountDecorator : Station
     {
-        private Station _station;
+        private double _ticketCost;
+        public double Discount { get; set; }
 
-        private double _discount;
-
-        public DiscountDecorator(Station station, double discountInPersantage)
+        public DiscountDecorator(Station station, double discountInPersantage) : base(station)
         {
-            _station = station;
-            _discount = discountInPersantage;
+            _ticketCost = station.TicketCost;
+            Discount = discountInPersantage;
         }
 
         public override double TicketCost
         {
-            get => _station.TicketCost - (_station.TicketCost * _discount / 100);
+            get => _ticketCost - (_ticketCost * Discount / 100);
         }
     }
 }

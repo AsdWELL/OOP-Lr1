@@ -31,7 +31,7 @@ namespace Lr1
 
             _stations.AddRange(
                 new BusStation("Пенза 1", 120, 3020, "+79875634543", 78.6, DateTime.Now, "Володарского 12"),
-                new TrainStation("Пенза 2", 10, 3020, "+79888888883", 234.9, DateTime.Now, "Володарского 13"),
+                new DiscountDecorator(new TrainStation("Пенза 2", 10, 3020, "+79888888883", 234.9, DateTime.Now, "Володарского 13"), 15),
                 new TrainStation("Пенза 3", 12370, 3020, "+71234567890", 13.2, DateTime.Now, "Володарского 14")
             );
 
@@ -61,7 +61,7 @@ namespace Lr1
             bool isEnabled = true;
 
             foreach (var i in Controls.OfType<TextBox>())
-                if (string.IsNullOrWhiteSpace(i.Text))
+                if (!i.Name.Equals("DiscountTextBox") && string.IsNullOrWhiteSpace(i.Text))
                 {
                     isEnabled = false;
                     break;
@@ -107,6 +107,11 @@ namespace Lr1
             AverageAttendace.Text = station.AverageAttendace.ToString();
             DateOfOpening.Value = station.DateOfOpening;
             Address.Text = station.Address;
+
+            if (station is DiscountDecorator discountStation)
+                DiscountTextBox.Text = discountStation.Discount.ToString();
+            else
+                DiscountTextBox.Text = string.Empty;
 
             SetInfoLabel();
         }
@@ -174,8 +179,29 @@ namespace Lr1
                 return;
             }
 
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(DiscountTextBox.Text))
+                {
+                    double discount = Convert.ToDouble(DiscountTextBox.Text);
+                    if (station is DiscountDecorator)
+                        ((DiscountDecorator)station).Discount = discount;
+                    else
+                        station = new DiscountDecorator(station, discount);
+                }
+                else
+                    if (station is DiscountDecorator)
+                        ((DiscountDecorator)station).Discount = 0;
+            }
+            catch
+            {
+                MessageBox.Show("Размер скидки должен быть числом", "Внимание");
+                return;
+            }
+
             _stations[StationsComboBox.SelectedIndex] = station;
             SetInfoLabel();
+            SetStationInfo();
 
             if (FieldsLabelsComboBox.SelectedIndex >= 0)
                 FieldsLabels_SelectedIndexChanged(FieldsLabelsComboBox, e);
@@ -198,7 +224,6 @@ namespace Lr1
                 0 => new BusStation("Новый вокзал"),
                 1 => new TrainStation("Новый вокзал")
             });
-            
             StationsComboBox.SelectedIndex = _stations.Count - 1;
         }
 
