@@ -46,7 +46,7 @@ namespace Lr1
                 $"{StationTypeComboBox.SelectedItem.ToString().ToLower()} вокзал");
             _stations.OnRemove += s => _messageForm.Show($"{StationTypeComboBox.SelectedItem} вокзал {s.Title} удален");
 
-            MessageBox.Show("Годов и Поршнев 22ВП1\nВариант 10", "Лабораторная работа №3");
+            MessageBox.Show("Годов и Поршнев 22ВП1\nВариант 10", "Лабораторная работа №5");
 
             SetStationInfo();
         }
@@ -107,6 +107,7 @@ namespace Lr1
             AverageAttendace.Text = station.AverageAttendace.ToString();
             DateOfOpening.Value = station.DateOfOpening;
             Address.Text = station.Address;
+            Discount.Value = station.PercentageDiscount;
 
             SetInfoLabel();
         }
@@ -147,6 +148,11 @@ namespace Lr1
             station.Title = Title.Text;
             station.Address = Address.Text;
 
+            if (string.IsNullOrEmpty(Discount.Text))
+                station.PercentageDiscount = 0;
+            else
+                station.PercentageDiscount = Convert.ToInt32(Discount.Value);
+
             try
             {
                 station.NumberOfSeats = Convert.ToInt32(NumberOfSeats.Text);
@@ -179,6 +185,11 @@ namespace Lr1
 
             if (FieldsLabelsComboBox.SelectedIndex >= 0)
                 FieldsLabels_SelectedIndexChanged(FieldsLabelsComboBox, e);
+        }
+
+        private void Discount_TextChanged(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -253,7 +264,18 @@ namespace Lr1
                 return;
             }
 
-            _messageForm.Show($"Цена билета {selectedStation.TicketCost:C}");
+            StringBuilder msg = new StringBuilder("Цена билета ");
+
+            if (selectedStation.PercentageDiscount == 0)
+                msg.Append(string.Format("{0:C}", selectedStation.TicketCost));
+            else
+            {
+                PriceVisitor priceVisitor = new PriceVisitor();
+                selectedStation.AcceptVisitor(priceVisitor);
+                msg.Append(string.Format("{0:C}", priceVisitor.TotalPrice));
+            }
+
+            _messageForm.Show(msg.ToString());
         }
 
         private void CalcProfitBtn_Click(object sender, EventArgs e)

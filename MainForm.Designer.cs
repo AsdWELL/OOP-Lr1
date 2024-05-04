@@ -54,6 +54,9 @@
             label8 = new Label();
             CalculateTicketPriceBtn = new Button();
             CalcProfitBtn = new Button();
+            label9 = new Label();
+            Discount = new NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)Discount).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -215,7 +218,7 @@
             InfoLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             InfoLabel.AutoSize = true;
             InfoLabel.Font = new Font("Segoe UI", 12F);
-            InfoLabel.Location = new Point(14, 407);
+            InfoLabel.Location = new Point(14, 453);
             InfoLabel.Name = "InfoLabel";
             InfoLabel.Size = new Size(46, 28);
             InfoLabel.TabIndex = 18;
@@ -225,7 +228,7 @@
             // 
             UpdateStationBtn.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             UpdateStationBtn.Font = new Font("Segoe UI", 12F);
-            UpdateStationBtn.Location = new Point(270, 340);
+            UpdateStationBtn.Location = new Point(270, 386);
             UpdateStationBtn.Name = "UpdateStationBtn";
             UpdateStationBtn.Size = new Size(200, 44);
             UpdateStationBtn.TabIndex = 19;
@@ -239,7 +242,7 @@
             StationsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             StationsComboBox.Font = new Font("Segoe UI", 12F);
             StationsComboBox.FormattingEnabled = true;
-            StationsComboBox.Location = new Point(14, 345);
+            StationsComboBox.Location = new Point(14, 391);
             StationsComboBox.Name = "StationsComboBox";
             StationsComboBox.Size = new Size(200, 36);
             StationsComboBox.TabIndex = 20;
@@ -249,7 +252,7 @@
             // 
             AddNewStationBtn.Anchor = AnchorStyles.Right;
             AddNewStationBtn.Font = new Font("Segoe UI", 12F);
-            AddNewStationBtn.Location = new Point(490, 391);
+            AddNewStationBtn.Location = new Point(490, 437);
             AddNewStationBtn.Name = "AddNewStationBtn";
             AddNewStationBtn.Size = new Size(200, 44);
             AddNewStationBtn.TabIndex = 21;
@@ -264,7 +267,7 @@
             FieldsLabelsComboBox.Font = new Font("Segoe UI", 12F);
             FieldsLabelsComboBox.FormattingEnabled = true;
             FieldsLabelsComboBox.Items.AddRange(new object[] { "Название вокзала", "Количество мест в 16СС", "Продано билетов", "Телефонный номер", "Средняя посещаемость", "Дата открытия", "Адрес" });
-            FieldsLabelsComboBox.Location = new Point(14, 775);
+            FieldsLabelsComboBox.Location = new Point(14, 821);
             FieldsLabelsComboBox.Name = "FieldsLabelsComboBox";
             FieldsLabelsComboBox.Size = new Size(260, 36);
             FieldsLabelsComboBox.TabIndex = 23;
@@ -275,7 +278,7 @@
             FieldValueLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             FieldValueLabel.AutoSize = true;
             FieldValueLabel.Font = new Font("Segoe UI", 12F);
-            FieldValueLabel.Location = new Point(312, 783);
+            FieldValueLabel.Location = new Point(312, 829);
             FieldValueLabel.Name = "FieldValueLabel";
             FieldValueLabel.Size = new Size(46, 28);
             FieldValueLabel.TabIndex = 24;
@@ -285,7 +288,7 @@
             // 
             DeleteStationBtn.Anchor = AnchorStyles.Right;
             DeleteStationBtn.Font = new Font("Segoe UI", 12F);
-            DeleteStationBtn.Location = new Point(490, 458);
+            DeleteStationBtn.Location = new Point(490, 504);
             DeleteStationBtn.Name = "DeleteStationBtn";
             DeleteStationBtn.Size = new Size(200, 44);
             DeleteStationBtn.TabIndex = 25;
@@ -297,7 +300,7 @@
             // 
             AllStationInfoBtn.Anchor = AnchorStyles.Right;
             AllStationInfoBtn.Font = new Font("Segoe UI", 12F);
-            AllStationInfoBtn.Location = new Point(490, 522);
+            AllStationInfoBtn.Location = new Point(490, 568);
             AllStationInfoBtn.Name = "AllStationInfoBtn";
             AllStationInfoBtn.Size = new Size(200, 44);
             AllStationInfoBtn.TabIndex = 26;
@@ -312,7 +315,7 @@
             StationTypeComboBox.Font = new Font("Segoe UI", 12F);
             StationTypeComboBox.FormattingEnabled = true;
             StationTypeComboBox.Items.AddRange(new object[] { "Автобусный", "Ж/д" });
-            StationTypeComboBox.Location = new Point(490, 345);
+            StationTypeComboBox.Location = new Point(490, 391);
             StationTypeComboBox.Name = "StationTypeComboBox";
             StationTypeComboBox.Size = new Size(200, 36);
             StationTypeComboBox.TabIndex = 28;
@@ -322,7 +325,7 @@
             label8.Anchor = AnchorStyles.Right;
             label8.AutoSize = true;
             label8.Font = new Font("Microsoft Sans Serif", 12F);
-            label8.Location = new Point(528, 306);
+            label8.Location = new Point(528, 352);
             label8.Name = "label8";
             label8.Size = new Size(125, 25);
             label8.TabIndex = 29;
@@ -332,7 +335,7 @@
             // 
             CalculateTicketPriceBtn.Anchor = AnchorStyles.Right;
             CalculateTicketPriceBtn.Font = new Font("Segoe UI", 12F);
-            CalculateTicketPriceBtn.Location = new Point(490, 586);
+            CalculateTicketPriceBtn.Location = new Point(490, 632);
             CalculateTicketPriceBtn.Name = "CalculateTicketPriceBtn";
             CalculateTicketPriceBtn.Size = new Size(200, 44);
             CalculateTicketPriceBtn.TabIndex = 30;
@@ -344,7 +347,7 @@
             // 
             CalcProfitBtn.Anchor = AnchorStyles.Right;
             CalcProfitBtn.Font = new Font("Segoe UI", 12F);
-            CalcProfitBtn.Location = new Point(490, 645);
+            CalcProfitBtn.Location = new Point(490, 691);
             CalcProfitBtn.Name = "CalcProfitBtn";
             CalcProfitBtn.Size = new Size(200, 44);
             CalcProfitBtn.TabIndex = 31;
@@ -352,11 +355,31 @@
             CalcProfitBtn.UseVisualStyleBackColor = true;
             CalcProfitBtn.Click += CalcProfitBtn_Click;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Microsoft Sans Serif", 12F);
+            label9.Location = new Point(14, 344);
+            label9.Name = "label9";
+            label9.Size = new Size(218, 25);
+            label9.TabIndex = 32;
+            label9.Text = "Скидка на билеты в %";
+            // 
+            // Discount
+            // 
+            Discount.Font = new Font("Segoe UI", 12F);
+            Discount.Location = new Point(270, 340);
+            Discount.Name = "Discount";
+            Discount.Size = new Size(200, 34);
+            Discount.TabIndex = 34;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(702, 920);
+            Controls.Add(Discount);
+            Controls.Add(label9);
             Controls.Add(CalcProfitBtn);
             Controls.Add(CalculateTicketPriceBtn);
             Controls.Add(label8);
@@ -388,6 +411,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Вокзал";
             Load += MainForm_Load;
+            ((System.ComponentModel.ISupportInitialize)Discount).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -420,5 +444,7 @@
         private Label label8;
         private Button CalculateTicketPriceBtn;
         private Button CalcProfitBtn;
+        private Label label9;
+        private NumericUpDown Discount;
     }
 }

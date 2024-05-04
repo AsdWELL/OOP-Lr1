@@ -140,6 +140,8 @@ namespace Lr1
 
         public abstract double TicketCost { get; }
 
+        public int PercentageDiscount { get; set; } = 0;
+
         /// <summary>
         /// Конструктор бзе параметров
         /// </summary>
